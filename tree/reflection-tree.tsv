@@ -1,0 +1,40 @@
+id	parentId	type	text	options	target	signal
+START	null	start	Good evening. Let’s walk through your day — no judgment, just clarity.			
+A1_OPEN	START	question	If you had to label today overall, what fits best?	Productive|Draining|Mixed|Frustrating		
+A1_D1	A1_OPEN	decision		answer=Productive|Mixed:A1_Q1_HIGH;answer=Draining|Frustrating:A1_Q1_LOW		
+A1_Q1_HIGH	A1_D1	question	What most contributed to things going well?	My preparation|Team support|Luck/timing|I adapted quickly		axis1:internal
+A1_Q1_LOW	A1_D1	question	When things didn’t go well, what felt most true?	I could’ve handled it better|Others caused it|It was out of my control|I felt stuck		axis1:external
+A1_Q2	A1_Q1_HIGH	question	During a key moment, how did you respond?	Took initiative|Waited for clarity|Adjusted strategy|Avoided the issue		axis1:internal
+A1_Q2B	A1_Q1_LOW	question	During a key moment, how did you respond?	Tried to regain control|Waited for help|Pushed through blindly|Withdrew		axis1:external
+A1_D2	A1_Q2	decision		answer=Took initiative|Adjusted strategy:A1_R_INT;answer=Waited for clarity|Avoided the issue:A1_R_MIX		
+A1_D2B	A1_Q2B	decision		answer=Tried to regain control:A1_R_MIX;answer=Waited for help|Withdrew:A1_R_EXT		
+A1_R_INT	A1_D2	reflection	You stepped in and influenced outcomes. That’s agency — even when conditions aren’t perfect, you act.		axis1:internal
+A1_R_MIX	A1_D2	reflection	There were moments of choice, even if not fully used. Awareness of that gap is where growth begins.		axis1:internal
+A1_R_EXT	A1_D2B	reflection	Today may have felt controlled by outside forces. But somewhere, you made decisions — small ones still count.		axis1:external
+BRIDGE_1_2	A1_R_INT	bridge	Now shift focus — from what happened to you, to what you contributed.		A2_OPEN	
+BRIDGE_1_2B	A1_R_EXT	bridge	Let’s shift — beyond what happened, to what you gave.		A2_OPEN	
+
+A2_OPEN	null	question	Think about your interactions today. What stands out most?	I helped someone|I did my assigned work|I expected more recognition|I felt unsupported		
+A2_D1	A2_OPEN	decision		answer=I helped someone:A2_Q1_HIGH;answer=I did my assigned work:A2_Q1_MID;answer=I expected more recognition|I felt unsupported:A2_Q1_LOW		
+A2_Q1_HIGH	A2_D1	question	What drove that action?	I wanted to help|It felt right|Team needed it|I enjoy contributing		axis2:contribution
+A2_Q1_MID	A2_D1	question	How do you view your effort today?	Met expectations|Could’ve done more|Did enough|Just got through		axis2:neutral
+A2_Q1_LOW	A2_D1	question	What frustrated you most?	Lack of recognition|Others underperforming|Unfair expectations|Not enough support		axis2:entitlement
+A2_Q2	A2_Q1_HIGH	question	Did you go beyond your role?	Yes willingly|Yes but reluctantly|No|Not sure		axis2:contribution
+A2_Q2B	A2_Q1_LOW	question	What did you focus on more?	What I deserved|What others didn’t do|My workload|Team outcome		axis2:entitlement
+A2_D2	A2_Q2	decision		answer=Yes willingly:A2_R_HIGH;answer=No|Not sure:A2_R_MIX		
+A2_D2B	A2_Q2B	decision		answer=What I deserved|What others didn’t do:A2_R_LOW;answer=Team outcome:A2_R_MIX		
+A2_R_HIGH	A2_D2	reflection	You contributed beyond obligation. That builds trust and long-term value — even when unnoticed.		axis2:contribution
+A2_R_MIX	A2_D2	reflection	You met expectations, but there’s space to shift from “doing enough” to “creating value.”		axis2:neutral
+A2_R_LOW	A2_D2B	reflection	Frustration often centers on what we’re owed. Shifting toward what you can give changes the dynamic.		axis2:entitlement
+BRIDGE_2_3	A2_R_HIGH	bridge	Let’s zoom out — beyond you, beyond effort — to impact.		A3_OPEN	
+BRIDGE_2_3B	A2_R_LOW	bridge	Now zoom out — beyond immediate frustrations — to the bigger picture.		A3_OPEN	
+
+A3_OPEN	null	question	When you think about today’s biggest moment, who comes to mind?	Just me|My team|A colleague|The customer/end user		
+A3_Q1	A3_OPEN	question	Whose outcome mattered most in that moment?	Mine|Shared outcome|Someone else’s|End user impact		axis3:self
+A3_D1	A3_Q1	decision		answer=Mine:A3_R_SELF;answer=Shared outcome|Someone else’s:A3_R_TEAM;answer=End user impact:A3_R_WIDE		
+A3_R_SELF	A3_D1	reflection	Your focus stayed on your own outcomes. That’s natural — but expanding perspective can reduce pressure.		axis3:self
+A3_R_TEAM	A3_D1	reflection	You considered others alongside yourself. That balance is where strong collaboration emerges.		axis3:team
+A3_R_WIDE	A3_D1	reflection	You saw the bigger picture — beyond yourself and team. That’s where meaning and impact align.		axis3:wide
+
+SUMMARY	A3_R_WIDE	summary	Today: You leaned {axis1.dominant} on control, {axis2.dominant} on contribution, and {axis3.dominant} on perspective. Small shifts in awareness can reshape tomorrow.		
+END	SUMMARY	end	That’s it for today. See you tomorrow.		
