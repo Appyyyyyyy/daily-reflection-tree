@@ -1,27 +1,70 @@
-## Daily Reflection Tree
+# Daily Reflection Tree
 
-This repository contains a deterministic reflection system designed to guide employees through structured end-of-day introspection.
+A deterministic end-of-day reflection system implemented as a structured decision tree.
 
-### Structure
+This project encodes psychological reflection into a **fully deterministic, auditable flow** — not a chatbot.
 
-- /tree/reflection-tree.tsv → Core decision tree
-- /tree/tree-diagram.md → Visual representation
-- write-up.md → Design rationale
+---
 
-### Key Features
+## 🔑 Key Idea
 
-- Fully deterministic (no LLM at runtime)
-- Fixed-option decision tree
-- Covers three psychological axes:
-  - Locus of Control
-  - Contribution vs Entitlement
-  - Radius of Concern
+The system guides users through three sequential axes:
 
-### How to Use
+1. **Locus of Control** (Victim ↔ Victor)  
+2. **Contribution vs Entitlement**  
+3. **Radius of Concern** (Self ↔ Others)
 
-The tree can be read directly as structured data or executed via a simple CLI agent (optional Part B).
+Each interaction:
+- Uses fixed options (no free text)
+- Follows deterministic branching
+- Produces consistent outcomes for identical inputs
 
-Each node defines:
-- Question or reflection
-- Fixed options
-- Deterministic transitions
+---
+
+## 📂 Repository Structure
+
+
+/tree/
+reflection-tree.tsv # Core decision tree (primary deliverable)
+tree-diagram.md # Visual flow of the tree
+
+/agent/
+run.py # CLI-based deterministic agent
+
+/transcripts/ # (Optional) Sample runs
+write-up.md # Design rationale
+README.md
+
+
+---
+
+## 🌳 How the Tree Works
+
+Each node contains:
+
+- `id` → Unique identifier  
+- `type` → start | question | decision | reflection | bridge | summary | end  
+- `text` → What the user sees  
+- `options` → Fixed choices (for question nodes)  
+- `target` → Next node (for routing)  
+- `signal` → Updates psychological state  
+
+The system tracks signals across axes:
+
+- axis1 → internal / external  
+- axis2 → contribution / entitlement  
+- axis3 → self / team / wide  
+
+Final output is based on **dominant signals**, not AI inference.
+
+---
+
+## ▶️ Running the Agent (Part B)
+
+A simple CLI agent is included to execute the tree.
+
+### Steps
+
+```bash
+cd agent
+python run.py
